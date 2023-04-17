@@ -8,6 +8,20 @@
 4. Go inside the container.
 5. Stop the container.
 
+![img.png](img.png)
+
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
+
+![img_4.png](img_4.png)
+
+![img_5.png](img_5.png)
+
+![img_6.png](img_6.png)
+
 
 ## Assignment-2
 
@@ -18,11 +32,35 @@ Given that you have instructions to run the go-app (in pre-requisites)
 4. Run docker history, observe and understand the output.
 5. Push the docker image to your dockerhub.
 
+![img_7.png](img_7.png)
+
+![img_8.png](img_8.png)
+
+![img_9.png](img_9.png)
+
+![img_10.png](img_10.png)
+
+![img_11.png](img_11.png)
+
+![img_12.png](img_12.png)
+
+![img_13.png](img_13.png)
+
+![img_14.png](img_14.png)
+
 
 ## Assignment-3
 1. Create multistage build and run Dockerfile for go -app
 - Stage 1 : Build
 - Stage 2 : Run
+
+![img_15.png](img_15.png)
+
+![img_16.png](img_16.png)
+
+![img_17.png](img_17.png)
+
+![img_18.png](img_18.png)
 
 
 ## Assignment-4
@@ -30,6 +68,34 @@ Given that you have instructions to run the go-app (in pre-requisites)
 2. Create a container and attach it to my-volume
 3. Change something in the volume folder and add a file with some content.
 4. Create a second container mounted with same volume . Check if the file exists or not.
+
+![img_19.png](img_19.png)
+
+![img_20.png](img_20.png)
+
+![img_21.png](img_21.png)
+
+![img_22.png](img_22.png)
+
+![img_23.png](img_23.png)
+
+![img_24.png](img_24.png)
+
+![img_25.png](img_25.png)
+
+![img_26.png](img_26.png)
+
+![img_27.png](img_27.png)
+
+![img_28.png](img_28.png)
+
+![img_29.png](img_29.png)
+
+![img_30.png](img_30.png)
+
+![img_31.png](img_31.png)
+
+![img_32.png](img_32.png)
 
 
 ## Assignment-5
