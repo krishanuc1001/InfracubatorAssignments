@@ -20,9 +20,6 @@
 
 ![img_5.png](img_5.png)
 
-![img_6.png](img_6.png)
-
-
 ## Assignment-2
 
 Given that you have instructions to run the go-app (in pre-requisites)
@@ -31,6 +28,8 @@ Given that you have instructions to run the go-app (in pre-requisites)
 3. Tag the docker image with v1.
 4. Run docker history, observe and understand the output.
 5. Push the docker image to your dockerhub.
+
+![img_6.png](img_6.png)
 
 ![img_7.png](img_7.png)
 
@@ -48,20 +47,19 @@ Given that you have instructions to run the go-app (in pre-requisites)
 
 ![img_14.png](img_14.png)
 
+![img_15.png](img_15.png)
+
 
 ## Assignment-3
 1. Create multistage build and run Dockerfile for go -app
 - Stage 1 : Build
 - Stage 2 : Run
 
-![img_15.png](img_15.png)
-
 ![img_16.png](img_16.png)
 
 ![img_17.png](img_17.png)
 
 ![img_18.png](img_18.png)
-
 
 ## Assignment-4
 1. Create  a volume  call it as my-volume
@@ -96,6 +94,7 @@ Given that you have instructions to run the go-app (in pre-requisites)
 ![img_31.png](img_31.png)
 
 ![img_32.png](img_32.png)
+
 
 
 ## Assignment-5
