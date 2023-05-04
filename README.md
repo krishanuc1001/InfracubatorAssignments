@@ -103,3 +103,19 @@ Given that you have instructions to run the go-app (in pre-requisites)
 3. Use / endpoint to check the service running
 4. Use /vote endpoint to add vote
 5. docker-compose down
+
+![img_16.png](img_16.png)
+
+![img_17.png](img_17.png)
+
+![img_18.png](img_18.png)
+
+![img_36.png](img_36.png)
+
+![img_37.png](img_37.png)
+
+![img_38.png](img_38.png)
+
+![img_39.png](img_39.png)
+
+![img_40.png](img_40.png)
