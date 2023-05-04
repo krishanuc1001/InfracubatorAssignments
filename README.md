@@ -55,11 +55,11 @@ Given that you have instructions to run the go-app (in pre-requisites)
 - Stage 1 : Build
 - Stage 2 : Run
 
-![img_16.png](img_16.png)
+![img_33.png](img_33.png)
 
-![img_17.png](img_17.png)
+![img_34.png](img_34.png)
 
-![img_18.png](img_18.png)
+![img_35.png](img_35.png)
 
 ## Assignment-4
 1. Create  a volume  call it as my-volume
