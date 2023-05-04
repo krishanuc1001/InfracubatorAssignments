@@ -108,6 +108,23 @@ Given that you have instructions to run the go-app (in pre-requisites)
 
 ![img_17.png](img_17.png)
 
+This is a Docker Compose YAML file that defines a service called `app`.
+
+`version: '3'` specifies the version of the Docker Compose file syntax.
+
+Under `services`, the `app` service is defined with the following properties:
+
+- `container_name: my_go_app`: sets the name of the container to `my_go_app`. This is optional, but can be useful for easier container management.
+- `build`: specifies how to build the Docker image for the service. It has two properties:
+    - `context: .`: sets the build context to the current directory (`.`). This is the directory from which the build context is sent to the Docker daemon.
+    - `dockerfile: Dockerfile3`: specifies the Dockerfile name to use for building the image. This file should be present in the build context.
+- `ports`: maps the container's port `8080` to the host's port `8080`. This allows the service to be accessible from outside the Docker container.
+- `volumes`: mounts the current directory `.` as a volume in the container at the path `/go/src/my_app`. This allows changes made to the source code on the host machine to be reflected in the container.
+- `environment`: sets an environment variable `PORT` to `8080`. This environment variable can be used in the application code to set the port on which the application listens.
+
+Overall, this Docker Compose file is defining a service that builds a Docker image from a specified Dockerfile, runs the image in a container with a specified container name, exposes the container's port `8080` to the host's port `8080`, mounts the current directory as a volume in the container, and sets an environment variable `PORT` to `8080`.
+
+
 ![img_18.png](img_18.png)
 
 ![img_36.png](img_36.png)
