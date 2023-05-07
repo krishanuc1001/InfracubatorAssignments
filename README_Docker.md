@@ -10,15 +10,16 @@
 
 ![img](https://user-images.githubusercontent.com/40739038/236662769-dd7eddd1-2db0-47ce-ba5a-854d28a6338e.png)
 
-![img_1.png](img_1.png)
+![img_1](https://user-images.githubusercontent.com/40739038/236662991-b819b1cb-96eb-4baa-936b-6e24950851b4.png)
 
-![img_2.png](img_2.png)
+![img_2](https://user-images.githubusercontent.com/40739038/236662992-0708d11d-bfbd-46ea-b9c9-54d9d1092820.png)
 
-![img_3.png](img_3.png)
+![img_3](https://user-images.githubusercontent.com/40739038/236662994-a81ad07d-7056-4b03-be67-9f02d4dffb27.png)
 
-![img_4.png](img_4.png)
+![img_4](https://user-images.githubusercontent.com/40739038/236662996-1a6b6afc-dbc5-4268-a0b7-b7b87e8fb560.png)
 
-![img_5.png](img_5.png)
+![img_5](https://user-images.githubusercontent.com/40739038/236662999-496e281f-0766-470d-ac67-a5af745e08fa.png)
+
 
 ## Assignment-2
 
