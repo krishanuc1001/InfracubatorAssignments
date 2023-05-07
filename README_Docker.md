@@ -30,25 +30,25 @@ Given that you have instructions to run the go-app (in pre-requisites)
 4. Run docker history, observe and understand the output.
 5. Push the docker image to your dockerhub.
 
-![img_6.png](img_6.png)
+![img_6](https://user-images.githubusercontent.com/40739038/236663194-2d44d809-9149-4b56-b894-09d07da3bcda.png)
 
-![img_7.png](img_7.png)
+![img_7](https://user-images.githubusercontent.com/40739038/236663196-067bdf4a-1a40-4b4c-8c8d-cf231e2a93da.png)
 
-![img_8.png](img_8.png)
+![img_8](https://user-images.githubusercontent.com/40739038/236663198-cedde402-2256-456a-bfd7-ddb3e0ec0d82.png)
 
-![img_9.png](img_9.png)
+![img_9](https://user-images.githubusercontent.com/40739038/236663199-e5d89693-32af-42ed-b0fb-8b337ce577ac.png)
 
-![img_10.png](img_10.png)
+![img_10](https://user-images.githubusercontent.com/40739038/236663200-438ccfcc-7d7e-42db-abc5-5dfd61cff1de.png)
 
-![img_11.png](img_11.png)
+![img_11](https://user-images.githubusercontent.com/40739038/236663201-8dcd218f-fd00-4837-81b4-4865acae28c3.png)
 
-![img_12.png](img_12.png)
+![img_12](https://user-images.githubusercontent.com/40739038/236663203-d6e39326-7c15-4dfc-b61a-50a1977b794e.png)
 
-![img_13.png](img_13.png)
+![img_13](https://user-images.githubusercontent.com/40739038/236663205-5341e064-a113-4683-9ab3-836a3a2be693.png)
 
-![img_14.png](img_14.png)
+![img_14](https://user-images.githubusercontent.com/40739038/236663208-d7f64f6f-1c61-4477-9122-c557cd5c945f.png)
 
-![img_15.png](img_15.png)
+![img_15](https://user-images.githubusercontent.com/40739038/236663209-240a80ce-6284-414a-9e07-ea65e64e250c.png)
 
 
 ## Assignment-3
