@@ -105,9 +105,9 @@ Given that you have instructions to run the go-app (in pre-requisites)
 4. Use /vote endpoint to add vote
 5. docker-compose down
 
-![img_16.png](img_16.png)
+![img_16](https://user-images.githubusercontent.com/40739038/236663741-4f0312a2-021d-4cb9-baa9-6162e97fd5fc.png)
 
-![img_17.png](img_17.png)
+![img_17](https://user-images.githubusercontent.com/40739038/236663742-83847fb1-013f-498d-83b6-9a113e483064.png)
 
 This is a Docker Compose YAML file that defines a service called `app`.
 
@@ -125,15 +125,14 @@ Under `services`, the `app` service is defined with the following properties:
 
 Overall, this Docker Compose file is defining a service that builds a Docker image from a specified Dockerfile, runs the image in a container with a specified container name, exposes the container's port `8080` to the host's port `8080`, mounts the current directory as a volume in the container, and sets an environment variable `PORT` to `8080`.
 
+![img_18](https://user-images.githubusercontent.com/40739038/236663743-e515aa39-e5b9-409f-a1c1-d804d2e19a01.png)
 
-![img_18.png](img_18.png)
+![img_36](https://user-images.githubusercontent.com/40739038/236663745-9dffbacc-8ca7-434b-99cc-0646f1aca612.png)
 
-![img_36.png](img_36.png)
+![img_37](https://user-images.githubusercontent.com/40739038/236663746-ef7aa672-1109-4b1a-bed3-936c45a62ab5.png)
 
-![img_37.png](img_37.png)
+![img_38](https://user-images.githubusercontent.com/40739038/236663747-0690eb5e-57d1-441d-bbee-18e439617349.png)
 
-![img_38.png](img_38.png)
+![img_39](https://user-images.githubusercontent.com/40739038/236663748-25ab1682-d7ad-445f-87d9-531778cbfd14.png)
 
-![img_39.png](img_39.png)
-
-![img_40.png](img_40.png)
+![img_40](https://user-images.githubusercontent.com/40739038/236663749-ad42f36c-54ae-40b9-92e7-325d2fc64767.png)
