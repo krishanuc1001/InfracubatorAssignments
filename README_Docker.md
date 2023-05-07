@@ -56,11 +56,12 @@ Given that you have instructions to run the go-app (in pre-requisites)
 - Stage 1 : Build
 - Stage 2 : Run
 
-![img_33.png](img_33.png)
+![img_33](https://user-images.githubusercontent.com/40739038/236663367-1f8ea858-bc21-447a-bf13-4bfbd4497b07.png)
 
-![img_34.png](img_34.png)
+![img_34](https://user-images.githubusercontent.com/40739038/236663371-9609e8f4-38da-44c8-a4ae-0a54ed27298e.png)
 
-![img_35.png](img_35.png)
+![img_35](https://user-images.githubusercontent.com/40739038/236663377-ac9bef25-06b7-43df-b1e1-6a92ef7e53b4.png)
+
 
 ## Assignment-4
 1. Create  a volume  call it as my-volume
