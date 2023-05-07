@@ -8,7 +8,7 @@
 4. Go inside the container.
 5. Stop the container.
 
-![img.png](img.png)
+![img](https://user-images.githubusercontent.com/40739038/236662769-dd7eddd1-2db0-47ce-ba5a-854d28a6338e.png)
 
 ![img_1.png](img_1.png)
 
