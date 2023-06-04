@@ -7,10 +7,21 @@
      b. Port to be exposed 8080
 2. Check the logs
 3. Check the Pod IP
-4. Hit the POD ip with /metadata url path from either insider minikube ( minikube ssh ) or colima ( colima ssh ) based on whatever you are using
+4. Hit the POD ip with /metadata url path from either inside minikube ( minikube ssh ) or colima ( colima ssh ) based on whatever you are using
 5. Describe the POD
 6. Exec into the container using `/bin/sh` command.
 
+<img width="1347" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/51344573-f188-49e5-9469-e43b568efcc9">
+
+<img width="1351" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/4f4d9c1b-4547-4b79-8ca2-0349866de27e">
+
+<img width="1347" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/a61af78e-ad4c-4d1c-94a9-b35538e20954">
+
+<img width="1348" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/72136259-07e6-421f-a3b4-a481925a05da">
+
+<img width="1352" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/99248843-890b-4716-8e97-9d62ec8e12ee">
+
+<img width="1348" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/4b6a5aae-accb-4119-8f19-a1ed9e1b5ddb">
 
 ## Assignment-2
 
