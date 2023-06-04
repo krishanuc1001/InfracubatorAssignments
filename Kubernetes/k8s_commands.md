@@ -3,7 +3,7 @@
 1. To run pod named nginx with image nginx
 
 ```
-kubectl run nginx —image=nginx
+kubectl run nginx --image=nginx
 ```
 
 2. To check status of all the PODs created
