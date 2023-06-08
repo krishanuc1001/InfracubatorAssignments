@@ -27,23 +27,68 @@
 
 <img width="798" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/70de328d-7d55-48b0-b1bd-7278d3671cfc">
 
+```
+metadata_replicaset.yaml
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: metadata-service
+  labels:
+    tier: metadata-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: metadata-service
+  template:
+    metadata:
+      labels:
+        tier: metadata-service
+    spec:
+      containers:
+        - name: metadata-replicaset
+          image: luckyganesh/metadata-service:v1
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 10
+```
 
 ```
 kubectl create -f metadata_replicaset.yaml
 ```
 
 ```
+kubectl get replicasets
+```
+
+```
+kubectl get pods
+```
+
+```
 curl --header "Content-Type: application/json" \
 --request POST \
 --data '{"group":"krishchak","name":"city","value":"Kolkata"}' \
-172.17.0.9:8080/metadata
+"http://172.17.0.9:8080/metadata"
 ```
 
 ```
-curl 172.17.0.9:8080/metadata
+curl http://172.17.0.9:8080/metadata
 ```
-
-
 
 ## Assignment-3
 
@@ -57,6 +102,39 @@ Note:
 
 <img width="792" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/b4cd3664-141f-484e-b978-b175d61888a3">
 
+```
+metadata_svc_nodeport.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: metadata-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000
+  selector:
+    tier: metadata-service
+```
+
+```
+kubectl get svc
+```
+
+```
+kubectl describe service metadata-service
+```
+
+```
+kubectl expose po metadata --port=80 --target-port=8080 --type=NodePort --dry-run=client -o yaml > metadata_svc_nodeport
+```
+
+```
+curl http://192.168.59.102:32175/actuator/health
+```
 
 ## Assignment-4
 
