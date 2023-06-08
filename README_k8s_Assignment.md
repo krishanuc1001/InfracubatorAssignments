@@ -27,6 +27,24 @@
 
 <img width="798" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/70de328d-7d55-48b0-b1bd-7278d3671cfc">
 
+
+```
+kubectl create -f metadata_replicaset.yaml
+```
+
+```
+curl --header "Content-Type: application/json" \
+--request POST \
+--data '{"group":"krishchak","name":"city","value":"Kolkata"}' \
+172.17.0.9:8080/metadata
+```
+
+```
+curl 172.17.0.9:8080/metadata
+```
+
+
+
 ## Assignment-3
 
 <img width="785" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/32d13f0d-f501-4a4c-a751-293e98880f9a">
