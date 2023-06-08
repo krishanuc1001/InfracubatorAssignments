@@ -1,28 +1,35 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: metadata
+  name: metadata-service
   labels:
-    app: guestbook
-    tier: backend
+    tier: metadata-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      tier: backend
+      tier: metadata-service
   template:
     metadata:
       labels:
-        tier: backend
+        tier: metadata-service
     spec:
       containers:
-        - name: metadata
+        - name: metadata-replicaset
           image: luckyganesh/metadata-service:v1
+          ports:
+            - containerPort: 8080
           livenessProbe:
             httpGet:
               path: /actuator/health
               port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 10
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 10
