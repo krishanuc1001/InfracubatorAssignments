@@ -3,11 +3,12 @@
 ## Assignment-1
 
 1. Create a Pod specification for the metadataservice
-     a. image : luckyganesh/metadata-service:v1 (for M1 chip - luckyganesh/metadata-service:v1-arm)
-     b. Port to be exposed 8080
+   a. image : luckyganesh/metadata-service:v1 (for M1 chip - luckyganesh/metadata-service:v1-arm)
+   b. Port to be exposed 8080
 2. Check the logs
 3. Check the Pod IP
-4. Hit the POD ip with /metadata url path from either inside minikube ( minikube ssh ) or colima ( colima ssh ) based on whatever you are using
+4. Hit the POD ip with /metadata url path from either inside minikube ( minikube ssh ) or colima ( colima ssh ) based on
+   whatever you are using
 5. Describe the POD
 6. Exec into the container using `/bin/sh` command.
 
@@ -95,6 +96,7 @@ curl http://172.17.0.9:8080/metadata
 <img width="785" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/32d13f0d-f501-4a4c-a751-293e98880f9a">
 
 Note:
+
 1. In case of minikube, node-ip will be minikube ip.
 2. In case of colima, node-ip will be localhost itself.
 
@@ -141,6 +143,7 @@ curl http://192.168.59.102:32175/actuator/health
 <img width="789" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/b7a78b17-cdf6-47d7-8ca8-e217fd332079">
 
 Image to use for metadata service
+
 - For Intel Mac - luckyganesh/metadata-service:v2
 - For M1 Mac - luckyganesh/metadata-service:v2-arm
 
@@ -402,11 +405,13 @@ kubectl create -f .
 ```
 
 Add test data
+
 ```
 curl --header "Content-Type: application/json" --request POST --data '{"group":"krishanu","name":"city","value":"Kolkata"}' 192.168.59.102:32175/metadata
 ```
 
 Get inside minikube using ssh and verify presence of data
+
 ```
 minikube ssh
 ```
@@ -416,6 +421,7 @@ cd /data/
 ```
 
 Get inside mongodb pod using ssh
+
 ```
 kubectl exec -it mongo-pod -- sh
 ```
@@ -436,12 +442,272 @@ curl 192.168.59.102:32175/metadata | jq
 
 <img width="788" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/dd7023d8-a9fe-4007-b52c-2432a523c6c5">
 
+```
+mongodb_deploy.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mongo
+  name: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - image: mongo
+          name: mongo
+          resources: {}
+          volumeMounts:
+            - name: mongo-persistance
+              mountPath: /data/db
+      volumes:
+        - name: mongo-persistance
+          persistentVolumeClaim:
+            claimName: hostpath-pvc
+status: {}
+```
+
+```
+pv.yml
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: hostpath-pv
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: standard
+  hostPath:
+    path: "/tmp/data1"
+```
+
+```
+kubectl create -f pv.yaml
+```
+
+```
+kubectl get pv
+```
+
+```
+pvc.yml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hostpath-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+```
+
+```
+kubectl create -f pvc-definition.yaml
+```
+
+```
+kubectl get pvc
+```
+
+```
+kubectl port-forward metadata-service-fsg3c 8090:8080
+```
+
+```
+curl --header "Content-Type: application/json" --request POST --data '{"group":"krishanu", "name":"city","value": "Kolkata"}' "http://localhost:8090/metadata"
+```
+
+Verify data in PVC
+
+```
+minikube ssh
+```
+
+```
+cd /tmp/data1
+```
+
+Verify data inside mongodb pod
+
+```
+kubectl exec -it mongo-pod -- sh
+```
+
+```
+cd /data/db
+```
+
+```
+kubectl delete pod mongo-pod
+```
 
 ## Assignment-8
 
 <img width="787" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/773ca271-d23b-46b1-8dcd-8fe14ea78986">
 
+```
+config-map.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: config-map
+data:
+ MONGODB_URI: mongodb://mongo/metadata
+```
+
+```
+metadata.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: metadata
+  name: metadata
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metadata
+  template:
+    metadata:
+      labels:
+        app: metadata
+    spec:
+      containers:
+        - image: luckyganesh/metadata-service:v2
+          name: metadata-service
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGODB_URI
+                  name: config-map
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+```
+
+```
+mongo_deploy.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mongo
+  name: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - image: mongo
+          name: mongo
+          resources: {}
+          volumeMounts:
+            - name: mongo-persistence
+              mountPath: /data/db
+      volumes:
+        - name: mongo-persistance
+          persistentVolumeClaim:
+            claimName: hostpath-pvc
+status: {}
+```
+
+```
+kubectl create -f .
+```
 
 ## Assignment-9
 
 <img width="788" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/cd5c0cd6-7d06-4156-9c08-1df39f3431f3">
+
+```
+echo -n 'mongodb://mongo/metadata'| base64 
+```
+
+```
+metadata_secret.yaml
+
+apiVersion: v1
+data:
+  MONGODB_URI: fd4uZ29kYjfgdgL21vbmdvL21ldGFkYXRh
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: metadata-secret
+```
+
+```
+kubectl create -f metadata_secret.yaml 
+```
+
+```
+metadata.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: metadata
+  name: metadata
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metadata
+  template:
+    metadata:
+      labels:
+        app: metadata
+    spec:
+      containers:
+        - image: luckyganesh/metadata-service:v2
+          name: metadata-service
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  key: MONGODB_URI
+                  name: metadata-secret
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+```
