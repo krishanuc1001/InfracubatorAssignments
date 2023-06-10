@@ -294,6 +294,144 @@ spec:
 
 <img width="790" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/49949775-d24c-4246-ba88-5bb1beee4102">
 
+```
+mongodb-deployment.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: mongo-pod
+ labels:
+   db: mymongodb
+spec:
+ containers:
+ - name: mongo-container
+   image: mongo
+   ports:
+   - containerPort: 8080
+   volumeMounts:
+   - mountPath: /data/db
+     name: mongo-volume
+ volumes:
+ - name: mongo-volume
+   hostPath:
+    path: /data
+    type: DirectoryOrCreate
+```
+
+```
+metadata.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: metadata
+  name: metadata
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metadata
+  template:
+    metadata:
+      labels:
+        app: metadata
+    spec:
+      containers:
+        - image: luckyganesh/metadata-service:v2
+          name: metadata-service
+          env:
+            - name: MONGODB_URI
+              value: mongodb://mongo/metadata
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+```
+
+```
+metadata_svc_nodeport
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: metadata
+  name: metadata
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: metadata
+  type: NodePort
+status:
+  loadBalancer: {}
+```
+
+```
+mongo_svc.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mongo
+  name: mongo
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    app: mongo
+status:
+  loadBalancer: {}
+```
+
+```
+kubectl create -f .
+```
+
+Add test data
+```
+curl --header "Content-Type: application/json" --request POST --data '{"group":"krishanu","name":"city","value":"Kolkata"}' 192.168.59.102:32175/metadata
+```
+
+Get inside minikube using ssh and verify presence of data
+```
+minikube ssh
+```
+
+```
+cd /data/
+```
+
+To verify hostPath has the same data as container,
+```
+kubectl exec -it mongo-pod -- sh
+```
+
+```
+cd /data/db
+```
+
+```
+kubectl delete pod mongo-pod
+```
+
+```
+curl 192.168.59.102:32175/metadata | jq
+```
+
 ## Assignment-7
 
 <img width="788" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/dd7023d8-a9fe-4007-b52c-2432a523c6c5">
