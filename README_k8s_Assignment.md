@@ -146,6 +146,94 @@ Image to use for metadata service
 
 Please check the right image to use mongodb in the dockerhub.
 
+```
+kubectl create -f mongo-pod-definition.yaml
+```
+
+```
+mongo-pod-definition.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: mongo-pod
+ labels:
+   db: mongodb
+spec:
+ containers:
+ - name: mongo-container
+   image: mongo
+   ports:
+   - containerPort: 8080
+```
+
+```
+kubectl create -f mongodb-cluster-ip.yaml
+```
+
+```
+mongodb-cluster-ip.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: mongo
+ labels:
+  db: mongodb
+spec:
+ type: ClusterIP
+ ports:
+ - port: 27017
+   targetPort: 27017
+ selector:
+  db: mongodb
+```
+
+```
+kubectl create -f metadata_replicaset.yaml
+```
+
+```
+metadata_replicaset.yaml
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+ name: metadata-service
+ labels:
+  tier: metadata-service
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+   tier: metadata-service
+ template:
+  metadata:
+   labels:
+    tier: metadata-service
+  spec:
+   containers:
+   - image: luckyganesh/metadata-service:v2
+     name: metac-rs
+     env:
+     - name: MONGODB_URI
+       value: mongodb://mongo/metadata
+     ports:
+     - containerPort: 8080
+```
+
+```
+kubectl port-forward metadata-service-9w2jm 8090:8080
+```
+
+```
+curl http://localhost:8090/metadata
+```
+
+```
+curl --header "Content-Type: application/json" --request POST --data '{"group":"sunitparekh", "name":"city","value": "Pune"}' "http://localhost:8090/metadata"
+```
+
 ## Assignment-5
 
 <img width="790" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/a88e4733-4a3e-4060-b981-b6a5925164f0">
