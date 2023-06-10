@@ -238,6 +238,58 @@ curl --header "Content-Type: application/json" --request POST --data '{"group":"
 
 <img width="790" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/a88e4733-4a3e-4060-b981-b6a5925164f0">
 
+```
+metadata-service-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metaservice-deployment
+  labels:
+    app: metaservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: metaservice
+  template:
+    metadata:
+      labels:
+        app: metaservice
+    spec:
+      containers:
+      - name: metaservice-container
+        image: luckyganesh/metadata-service:v1
+        ports:
+        - containerPort: 8080
+```
+
+```
+mongodb-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongo-container
+        image: mongo
+        ports:
+        - containerPort: 8080
+```
+
 ## Assignment-6
 
 <img width="790" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/49949775-d24c-4246-ba88-5bb1beee4102">
