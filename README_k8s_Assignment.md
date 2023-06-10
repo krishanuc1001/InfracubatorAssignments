@@ -415,7 +415,7 @@ minikube ssh
 cd /data/
 ```
 
-To verify hostPath has the same data as container,
+Get inside mongodb pod using ssh
 ```
 kubectl exec -it mongo-pod -- sh
 ```
