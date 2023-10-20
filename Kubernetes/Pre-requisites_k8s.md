@@ -1,4 +1,4 @@
-**````[### Prerequisites for Rise of the Containers training
+### Prerequisites for Rise of the Containers training
 
 1) Install Kubernetes command line (k8s command line client tool)
 
