@@ -59,6 +59,18 @@ Exit
 ctrl + d
 ```
 
+5) To get the IP of minikube cluster
+
+```zsh
+minikube ip
+```
+
+6) To enter into minikube cluster
+
+```zsh
+minikube ssh
+```
+
 5) Stop Minikube cluster running on VirtualBox
 
 ```zsh
