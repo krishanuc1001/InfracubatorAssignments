@@ -6,7 +6,6 @@
 brew install kubectl
 ``` 
 
-
 2) Install Minikube using brew (you need VirtualBox or Hyperkit installed)
 
 (minikube version latest)
@@ -14,8 +13,9 @@ brew install kubectl
 brew install minikube
 ```
 
+Start minikube cluster:
 ```zsh
-minikube start --memory 6000 --cpus=4 --driver=hyperkit
+minikube start --memory=6000m --cpus=4 --driver=docker --kubernetes-version=v1.28.3
 ```
 
 - In the logs you can see if minikube is using hyperkit driver or virtual box driver.
@@ -46,7 +46,6 @@ Download mongodb image
 ```zsh
 docker pull mongo
 ```
-
 
 4) Verify minikube and kubectl working fine using following command
 
