@@ -1,0 +1,13 @@
+# Create pod with dobby application docker image and expose port 4444
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dobby
+  labels:
+    app: dobby
+spec:
+  containers:
+    - name: dobby
+      image: thecasualcoder/dobby
+      ports:
+        - containerPort: 4444
