@@ -1,0 +1,32 @@
+# Create a pod with multiple containers using POD description yaml file
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container
+  labels:
+    app: multi-container
+spec:
+
+  volumes:
+    - name: shared-data
+      emptyDir: {}
+
+  containers:
+    - name: nginx1
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: shared-data
+          mountPath: /usr/share/nginx/shared-data
+    - name: debian2
+      image: debian
+      volumeMounts:
+        - name: shared-data
+          mountPath: /shared-data
+      command: ["/bin/sh", "-c"]
+      args:
+        - while true; do
+            date >> /shared-data/index.html;
+            sleep 1;
+          done
