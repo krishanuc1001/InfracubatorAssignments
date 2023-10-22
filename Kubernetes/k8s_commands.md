@@ -63,3 +63,15 @@ or
 ```
 kubectl apply -f pod-definition.yml
 ```
+
+11) To enter into the POD
+
+```
+kubectl exec -it nginx -- bash
+```
+
+or
+
+```
+kubectl exec -it nginx -- sh
+```
