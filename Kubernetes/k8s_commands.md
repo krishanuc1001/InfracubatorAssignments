@@ -75,3 +75,23 @@ or
 ```
 kubectl exec -it nginx -- sh
 ```
+
+12) Add environment variable to the POD
+
+```
+kubectl create -f pod-definition-with-version.yml
+```
+
+```
+kubectl exec -it pod-name -- printenv
+```
+
+or,
+
+```
+kubectl exec -it pod-name -- sh
+```
+
+```
+echo $VERSION
+```
