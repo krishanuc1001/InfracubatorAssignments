@@ -12,17 +12,35 @@
 5. Describe the POD
 6. Exec into the container using `/bin/sh` command.
 
-<img width="1347" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/51344573-f188-49e5-9469-e43b568efcc9">
+metadata-service.yaml (Used a different image as the one mentioned in the assignment was crashing)
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: metadata
+  labels:
+    app: metadata
+spec:
+  containers:
+    - name: metadata
+      image: sunitparekh/metadata:v1.0
+      ports:
+          - containerPort: 8080
+```
 
 <img width="1351" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/4f4d9c1b-4547-4b79-8ca2-0349866de27e">
 
-<img width="1347" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/a61af78e-ad4c-4d1c-94a9-b35538e20954">
+![image](https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/c3d8b825-d909-4cde-ac94-a6d815b886ee)
 
-<img width="1348" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/72136259-07e6-421f-a3b4-a481925a05da">
+![image](https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/a6240261-a061-4bb4-ad9c-d8e7107ad2d4)
 
-<img width="1352" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/99248843-890b-4716-8e97-9d62ec8e12ee">
+![image](https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/32b163cf-9102-4dca-9d89-e341d2dc4d8a)
 
-<img width="1348" alt="image" src="https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/4b6a5aae-accb-4119-8f19-a1ed9e1b5ddb">
+![image](https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/d4f9fcaf-1d3b-4103-81dc-db2c04e0ded1)
+
+![image](https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/00f3fa70-89de-4b77-b096-b666a38d6e7c)
+
 
 ## Assignment-2
 
