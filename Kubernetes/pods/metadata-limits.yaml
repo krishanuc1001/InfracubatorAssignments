@@ -1,0 +1,23 @@
+## Create POD description yaml for metadata service with resource limits
+apiVersion: v1
+kind: Pod
+metadata:
+  name: metadata-limits
+  labels:
+    app: metadata
+spec:
+  containers:
+    - name: metadata
+      image: sunitparekh/metadata:v1.0
+      ports:
+        - containerPort: 8080
+      env:
+        - name: info.app.version
+          value: "3.0.0"
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
+        requests:
+          cpu: "250m"
+          memory: "256Mi"
