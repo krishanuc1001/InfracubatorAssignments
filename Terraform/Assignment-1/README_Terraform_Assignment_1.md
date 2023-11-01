@@ -30,6 +30,8 @@ Instructions:
    Set up a security group to manage inbound and outbound traffic to the EC2 instance.
    Define the necessary security group rules for the web server.
 
+![image](https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/3ac63823-b67a-46ad-8d9c-094a9e1b041d)
+
 
 6. Launch an EC2 Instance:
    Deploy an EC2 instance with a specified Amazon Machine Image (AMI), instance type, and key pair.
