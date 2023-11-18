@@ -20,11 +20,23 @@ resource "aws_internet_gateway" "igw" {
 
 # Create a Public Subnet
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.16.0/20"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.16.0/20"
+  availability_zone = local.application_availability_zones[0]
 
   tags = {
-    Name         = "${var.name_prefix}-public-subnet-1"
+    Name         = "${var.name_prefix}-public-subnet-${trimprefix(local.application_availability_zones[0], data.aws_region.this.name)}"
+    connectivity = "public"
+  }
+}
+
+resource "aws_subnet" "public_subnet_2" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.32.0/20"
+  availability_zone = local.application_availability_zones[1]
+
+  tags = {
+    Name         = "${var.name_prefix}-public-subnet-${trimprefix(local.application_availability_zones[1], data.aws_region.this.name)}"
     connectivity = "public"
   }
 }
@@ -51,6 +63,11 @@ resource "aws_route_table" "public_route_table" {
 # Create a Route Table Association for the Public Subnet
 resource "aws_route_table_association" "public_subnet_1_route_table_association" {
   subnet_id      = aws_subnet.public_subnet_1.id
+  route_table_id = aws_route_table.public_route_table.id
+}
+
+resource "aws_route_table_association" "public_subnet_2_route_table_association" {
+  subnet_id      = aws_subnet.public_subnet_2.id
   route_table_id = aws_route_table.public_route_table.id
 }
 
@@ -116,39 +133,39 @@ resource "aws_key_pair" "web_server_public_key" {
   }
 }
 
-# Launch an EC2 Instance
-resource "aws_instance" "web_server" {
-  ami                         = data.aws_ami.amazon_linux_latest_ami.id # Replace with your desired AMI ID
+
+# Launch AWS Configuration for EC2 instances
+resource "aws_launch_configuration" "web_server" {
+  name                        = "${var.name_prefix}-web-server-launch-configuration"
+  image_id                    = data.aws_ami.amazon_linux_latest_ami.id
   instance_type               = "t2.micro"
   key_name                    = aws_key_pair.web_server_public_key.key_name
+  security_groups             = [aws_security_group.webserver_security_group.id]
   associate_public_ip_address = true
 
-  subnet_id              = aws_subnet.public_subnet_1.id
-  vpc_security_group_ids = [aws_security_group.webserver_security_group.id]
+  user_data = <<-EOF
+    #!/bin/bash
+    yum update -y
+    yum install httpd -y
+    systemctl start httpd
+    systemctl enable httpd
+  EOF
 
-  # Use provisioners to install Apache2
-  connection {
-    type        = "ssh"
-    user        = "ec2-user" # For Amazon Linux 2
-    private_key = tls_private_key.private_key.private_key_pem
-    host        = self.public_ip
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum update -y",
-      "sudo yum install httpd -y",
-      "sudo systemctl start httpd",
-      "sudo systemctl enable httpd"
-    ]
-  }
-
-  tags = {
-    Name = "${var.name_prefix}-web-server"
-  }
 }
 
-# Output Variable Configuration
-output "web_server_public_ip" {
-  value = aws_instance.web_server.public_ip
+# Set up AWS Autoscaling Group
+resource "aws_autoscaling_group" "web_server" {
+  name                 = "${var.name_prefix}-web-server-asg"
+  vpc_zone_identifier  = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
+  desired_capacity     = 2
+  max_size             = 3
+  min_size             = 2
+  launch_configuration = aws_launch_configuration.web_server.id
+
+  tag {
+    key                 = "Name"
+    propagate_at_launch = true
+    value               = "${var.name_prefix}-web-server-ec2"
+  }
+
 }
