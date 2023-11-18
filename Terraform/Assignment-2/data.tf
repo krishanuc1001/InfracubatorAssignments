@@ -24,3 +24,13 @@ data "aws_ami" "amazon_linux_latest_ami" {
 data "http" "my_ip" {
   url = "https://ifconfig.co/"
 }
+
+data "aws_availability_zones" "all_availability_zones" {
+  state = "available"
+}
+
+data "aws_region" "this" {}
+
+locals {
+  application_availability_zones = slice(data.aws_availability_zones.all_availability_zones.names, 0, 2)
+}
