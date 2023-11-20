@@ -157,9 +157,9 @@ resource "aws_launch_configuration" "web_server" {
 resource "aws_autoscaling_group" "web_server" {
   name                 = "${var.name_prefix}-web-server-asg"
   vpc_zone_identifier  = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
-  desired_capacity     = 2
-  max_size             = 3
   min_size             = 2
+  max_size             = 3
+  desired_capacity     = 2
   launch_configuration = aws_launch_configuration.web_server.id
 
   tag {
@@ -168,4 +168,62 @@ resource "aws_autoscaling_group" "web_server" {
     value               = "${var.name_prefix}-web-server-ec2"
   }
 
+}
+
+resource "aws_cloudwatch_metric_alarm" "web-server-high-cpu-utilization" {
+  alarm_name          = "${var.name_prefix}-high-cpu-utilization-alarm"
+
+  namespace           = "AWS/EC2"
+  dimensions          = {
+    AutoScalingGroupName = aws_autoscaling_group.web_server.name
+  }
+  metric_name         = "CPUUtilization"
+
+  period              = "60"
+  evaluation_periods  = "5"
+  statistic           = "Average"
+
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  threshold           = "70"
+
+  alarm_description = "Scale up using cpu utilization"
+  alarm_actions     = [aws_autoscaling_policy.cpu_scale_up.arn]
+}
+
+resource "aws_autoscaling_policy" "cpu_scale_up" {
+  autoscaling_group_name = aws_autoscaling_group.web_server.name
+  name                   = "${var.name_prefix}-cpu-utilization-scale-up-policy"
+  policy_type            = "SimpleScaling"
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  scaling_adjustment     = 1
+}
+
+resource "aws_cloudwatch_metric_alarm" "web-server-low-cpu-utilization" {
+  alarm_name          = "${var.name_prefix}-low-cpu-utilization-alarm"
+
+  namespace           = "AWS/EC2"
+  dimensions          = {
+    AutoScalingGroupName = aws_autoscaling_group.web_server.name
+  }
+  metric_name         = "CPUUtilization"
+
+  period              = "60"
+  evaluation_periods  = "10"
+  statistic           = "Average"
+
+  comparison_operator = "LessThanThreshold"
+  threshold           = "40"
+
+  alarm_description = "Scale down using cpu utilization"
+  alarm_actions     = [aws_autoscaling_policy.cpu_scale_down.arn]
+}
+
+resource "aws_autoscaling_policy" "cpu_scale_down" {
+  autoscaling_group_name = aws_autoscaling_group.web_server.name
+  name                   = "${var.name_prefix}-cpu-utilization-scale-down-policy"
+  policy_type            = "SimpleScaling"
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 600
+  scaling_adjustment     = -1
 }
