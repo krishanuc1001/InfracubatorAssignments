@@ -19,5 +19,5 @@ Instructions:
    Ensure that you have a Route 53 hosted zone set up before creating the DNS record.
 
 3. Testing the DNS Record:
-   After implementing auto scaling and creating the DNS record, validate your Terraform configuration by applying the changes.
+   After implementing auto-scaling and creating the DNS record, validate your Terraform configuration by applying the changes.
    Test the DNS record by accessing the web application using the domain name you've configured.
