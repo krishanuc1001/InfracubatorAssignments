@@ -29,6 +29,11 @@ data "aws_availability_zones" "all_availability_zones" {
   state = "available"
 }
 
+data "aws_route53_zone" "my_zone" {
+  name         = "krish.name"
+  private_zone = true
+}
+
 data "aws_region" "this" {}
 
 locals {

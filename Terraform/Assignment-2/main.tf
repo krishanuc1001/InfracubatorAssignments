@@ -133,7 +133,6 @@ resource "aws_key_pair" "web_server_public_key" {
   }
 }
 
-
 # Launch AWS Configuration for EC2 instances
 resource "aws_launch_configuration" "web_server" {
   name                        = "${var.name_prefix}-web-server-launch-configuration"
@@ -171,17 +170,17 @@ resource "aws_autoscaling_group" "web_server" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "web-server-high-cpu-utilization" {
-  alarm_name          = "${var.name_prefix}-high-cpu-utilization-alarm"
+  alarm_name = "${var.name_prefix}-high-cpu-utilization-alarm"
 
-  namespace           = "AWS/EC2"
-  dimensions          = {
+  namespace  = "AWS/EC2"
+  dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.web_server.name
   }
-  metric_name         = "CPUUtilization"
+  metric_name = "CPUUtilization"
 
-  period              = "60"
-  evaluation_periods  = "5"
-  statistic           = "Average"
+  period             = "60"
+  evaluation_periods = "5"
+  statistic          = "Average"
 
   comparison_operator = "GreaterThanOrEqualToThreshold"
   threshold           = "70"
@@ -200,17 +199,17 @@ resource "aws_autoscaling_policy" "cpu_scale_up" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "web-server-low-cpu-utilization" {
-  alarm_name          = "${var.name_prefix}-low-cpu-utilization-alarm"
+  alarm_name = "${var.name_prefix}-low-cpu-utilization-alarm"
 
-  namespace           = "AWS/EC2"
-  dimensions          = {
+  namespace  = "AWS/EC2"
+  dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.web_server.name
   }
-  metric_name         = "CPUUtilization"
+  metric_name = "CPUUtilization"
 
-  period              = "60"
-  evaluation_periods  = "10"
-  statistic           = "Average"
+  period             = "60"
+  evaluation_periods = "10"
+  statistic          = "Average"
 
   comparison_operator = "LessThanThreshold"
   threshold           = "40"
@@ -226,4 +225,15 @@ resource "aws_autoscaling_policy" "cpu_scale_down" {
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 600
   scaling_adjustment     = -1
+}
+
+# Create a Route 53 DNS record
+resource "aws_route53_record" "web_server_route53_record" {
+  name    = "${var.name_prefix}-web_server_route53_record"
+  type    = "A"
+  zone_id = data.aws_route53_zone.my_zone.zone_id
+  ttl     = "300"
+  records = ["10.0.0.1"]
+
+  depends_on = [aws_autoscaling_group.web_server]
 }
