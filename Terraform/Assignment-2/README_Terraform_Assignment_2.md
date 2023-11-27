@@ -21,3 +21,6 @@ Instructions:
 3. Testing the DNS Record:
    After implementing auto-scaling and creating the DNS record, validate your Terraform configuration by applying the changes.
    Test the DNS record by accessing the web application using the domain name you've configured.
+
+
+![image](https://github.com/krishanuc1001/InfracubatorAssignments/assets/40739038/17e082b2-b640-4b51-a385-b1315c4d9e94)
