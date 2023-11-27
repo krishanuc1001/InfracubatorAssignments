@@ -1,5 +1,5 @@
 # Terraform AWS VPC, Subnet, Route Table, and EC2 Instance
-resource "aws_vpc" "main" {
+resource "aws_vpc" "main_vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -11,7 +11,7 @@ resource "aws_vpc" "main" {
 
 # Create an Internet Gateway
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.main_vpc.id
 
   tags = {
     Name = "${var.name_prefix}-igw"
@@ -20,7 +20,7 @@ resource "aws_internet_gateway" "igw" {
 
 # Create a Public Subnet
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id            = aws_vpc.main.id
+  vpc_id            = aws_vpc.main_vpc.id
   cidr_block        = "10.0.16.0/20"
   availability_zone = local.application_availability_zones[0]
 
@@ -31,7 +31,7 @@ resource "aws_subnet" "public_subnet_1" {
 }
 
 resource "aws_subnet" "public_subnet_2" {
-  vpc_id            = aws_vpc.main.id
+  vpc_id            = aws_vpc.main_vpc.id
   cidr_block        = "10.0.32.0/20"
   availability_zone = local.application_availability_zones[1]
 
@@ -43,7 +43,7 @@ resource "aws_subnet" "public_subnet_2" {
 
 # Create a Route Table
 resource "aws_route_table" "public_route_table" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.main_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -76,7 +76,7 @@ resource "aws_security_group" "webserver_security_group" {
   name        = "${var.name_prefix}-webserver-sg"
   description = "Security group for the web server"
 
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.main_vpc.id
 
   # Define inbound rules for SSH and HTTP
   ingress {
@@ -227,13 +227,33 @@ resource "aws_autoscaling_policy" "cpu_scale_down" {
   scaling_adjustment     = -1
 }
 
-# Create a Route 53 DNS record
+# search domain or register domain, if it does not exist
+resource "aws_route53domains_registered_domain" "top_level_domain" {
+  domain_name = "domainfortesting.link"
+}
+
+# creating your hosted zone
+resource "aws_route53_zone" "my_public_sub_zone" {
+  name = "krishanu.${data.aws_route53_zone.top_level_public_zone.name}"
+}
+
+# Sub domain record register
+resource "aws_route53_record" "sub_zone_record_register" {
+  name            = aws_route53_zone.my_public_sub_zone.name
+  type            = "NS"
+  zone_id         = data.aws_route53_zone.top_level_public_zone.zone_id
+  allow_overwrite = true
+  ttl             = 172800
+  records         = aws_route53_zone.my_public_sub_zone.name_servers
+}
+
+# Create a Route 53 DNS for application
 resource "aws_route53_record" "web_server_route53_record" {
-  name    = "${var.name_prefix}-web_server_route53_record"
+  name    = "www.${aws_route53_zone.my_public_sub_zone.name}"
   type    = "A"
-  zone_id = data.aws_route53_zone.my_zone.zone_id
+  zone_id = aws_route53_zone.my_public_sub_zone.zone_id
   ttl     = "300"
-  records = ["10.0.0.1"]
+  records = ["35.154.185.152", "3.110.102.121"]
 
   depends_on = [aws_autoscaling_group.web_server]
 }
