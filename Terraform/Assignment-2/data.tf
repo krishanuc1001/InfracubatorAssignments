@@ -29,13 +29,13 @@ data "aws_availability_zones" "all_availability_zones" {
   state = "available"
 }
 
-data "aws_route53_zone" "my_zone" {
-  name         = "krish.name"
-  private_zone = true
-}
-
 data "aws_region" "this" {}
 
 locals {
   application_availability_zones = slice(data.aws_availability_zones.all_availability_zones.names, 0, 2)
+}
+
+# searching for top level domain hosted zone
+data "aws_route53_zone" "top_level_public_zone" {
+  name = "${aws_route53domains_registered_domain.top_level_domain.domain_name}."
 }
