@@ -1,0 +1,22 @@
+# Create a sample ReplicaSet definition yaml file
+apiVersion: v1
+kind: ReplicationController
+metadata: #Metadata for Replication Controller
+  name: myapp-rc
+  labels:
+    app: myapp
+    type: front-end
+
+spec: #Spec for ReplicationController
+  replicas: 3
+  template:
+    metadata: #Metadata for POD
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+
+    spec: #Spec for POD
+      containers:
+        - name: nginx-container
+          image: nginx
