@@ -9,7 +9,35 @@
 2) Reliability: How are we going to bring reliability to the application? 
    If POD goes down, how is it going to come back again? 
 
-We are going to use ``Replicaset`` to answer the questions above.
+We are going to use ``Replicaset`` to address the above concerns.
+
+#### Reason for use of ```Replication Controller``` or ```ReplicaSet```
+
+- What if, for some reason our application crashes and the POD fails, users will no longer be able to access our application? 
+  To prevent users from losing access to our application, we would like to have more than one instance or POD running at the same time
+  That way, if one fails, we still have our application running on the other one.
+  The ```Replication controller``` helps us run multiple instances of a single pot in the Kubernetes cluster, thus providing high availability.
+
+Even if we have a single POD, the ```replication controller``` can help by automatically bringing up a new POD when the existing one fails.
+Thus, the ```replication controller``` ensures that the specified number of PODs are running at all times, even if it's just one or 100.
+
+- To create multiple PODs to share the load across them.
+
+For example, in this simple scenario, we have a single POD serving a set of users.
+When the number of users increase, we deploy additional POD to balance the load across the two PODs.
+If the demand further increases and if we were to run out of resources on the first node, we could deploy additional parts across the other nodes in the cluster.
+
+As we can see, the ```replication controller``` spans across multiple nodes in the cluster. 
+It helps us balance the load across multiple PODs on different nodes as well as scale our application when the demand increases.
+
+```Replication Controller``` and ```ReplicaSet```
+
+These are two similar terms ```replication controller``` and ```replica set```.
+Both have the same purpose, but they are not the same.
+
+```Replication controller``` is the older technology that is being replaced by ```Replica set```.
+
+```Replica set``` is the new recommended way to set up replication and concepts mentioned above apply to both the technologies
 
 Replicaset is an abstraction over POD which ensures that a specific number of PODs (which are also called as Replicas) are running all the time in the Kubernetes cluster.
 It achieves the same using ``Reconciliation Control Loop``. 
@@ -47,4 +75,3 @@ Key and value - both are user defined.
 - Set-based
 
 ![image](https://github.com/krishanuc1001/PlaywrightGradleFW/assets/40739038/53acd086-20f4-4896-8c4c-32fba0f072cd)
-
