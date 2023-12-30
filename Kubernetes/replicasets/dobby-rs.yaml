@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: dobby-rs
+  labels:
+    tier: dobby-pod
 spec:
   replicas: 2
   selector:
