@@ -75,3 +75,62 @@ Key and value - both are user defined.
 - Set-based
 
 ![image](https://github.com/krishanuc1001/PlaywrightGradleFW/assets/40739038/53acd086-20f4-4896-8c4c-32fba0f072cd)
+
+### Frequently Used Commands
+
+```
+kubectl get pods -A -o wide
+```
+
+```
+kubectl get pods --show-labels
+```
+
+- To get the list of ReplicaSets created
+```
+kubectl get rs
+```
+
+```
+kubectl get rs -A -o wide
+```
+
+- To delete a ReplicaSet created
+```
+kubectl delete rs dobby-rs
+```
+
+- To create a new Replicaset
+```
+kubectl apply -f <replicaset-definition>.yaml
+```
+
+```
+kubectl describe rs <replicaset-metadata-name>
+```
+
+```
+kubectl delete pod <pod-name>
+```
+
+- To replace or update a ReplicaSet
+```
+kubectl replace -f <replicaset-definition>.yaml
+```
+
+- To scale a ReplicaSet from CMD without modifying the definition yaml
+```
+kubectl scale --replicas=6 -f <replicaset-definition>.yaml
+```
+
+or 
+
+```
+kubectl scale --replicas=6 replicaset <replicaset-name>
+```
+
+or
+
+```
+kubectl edit replicaset <replicaset-name>
+```
