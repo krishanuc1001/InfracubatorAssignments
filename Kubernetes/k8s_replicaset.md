@@ -76,6 +76,18 @@ Key and value - both are user defined.
 
 ![image](https://github.com/krishanuc1001/PlaywrightGradleFW/assets/40739038/53acd086-20f4-4896-8c4c-32fba0f072cd)
 
+Note: 
+In the replica set specification section, we learned that there are three sections: `template`, `replicas` and `selector`.
+We need three replicas and have updated our selector. Say for instance, we have the same scenario as where we have three existing pods that were created already and need to create a replica set to monitor the pods to ensure there are a minimum of three running pods at all times.
+
+When the replication controller is created, it is not going to deploy a new instance of pod as 3 of them with matching labels are already created. 
+
+In that case, do we really need to provide a template section in the replica set specification since we are not expecting the replica set to create a new pod on deployment?
+
+Answer: Yes, we do. Because in case one of the pods were to fail in the future, the replica set needs to create a new one to maintain the desired number of Pods.
+And for the replica set to create a new pod, the template definition is required.
+
+
 ### Frequently Used Commands
 
 ```
