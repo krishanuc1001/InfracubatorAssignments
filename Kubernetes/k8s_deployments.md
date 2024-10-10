@@ -3,55 +3,63 @@
 
 - To create deployment
 
-```
+```bash
 kubectl create -f <deployment-definition-name>.yaml
 ```
 
 - To create deployment with a record for Change-Cause
 
-```
+```bash
 kubectl create -f <deployment-definition-name>.yaml --record
 ```
 
 - To see all the deployments
 
-```
+```bash
 kubectl get deployments
 ```
 
 - To see all the deployments created along with the Replica Sets and PODs
 
-```
+```bash
 kubectl get all
 ```
 
 - To create deployment with name, replicas, and image
 
-```
+```bash
 kubectl create deployment <name> --image=<image-name> --replicas=<replicas>
 ```
 
 - To update/ edit deployment configuration
 
-```
+```bash
 kubectl edit deployment myapp-deployment --record 
+```
+
+With Deployments, you can easily edit any field/property of the POD template. 
+Since the pod template is a child of the deployment specification, with every change the deployment will automatically delete and create a new pod with the new changes. 
+So if you are asked to edit a property of a POD part of a deployment you may do that simply by running the command
+
+```bash
+kubectl edit deployment my-deployment
 ```
 
 - To delete deployment
 
-```
+```bash
 kubectl delete deployments myapp-deployment
 ```
 
 - To see the status of Rollout 
 
-```
+```bash
 kubectl rollout status deployment/<deployment-name>
 ```
 
 - To see the revisions and history of the rollouts
 
-```
+```bash
 kubectl rollout history deployment/<deployment-name>
 ```
 
@@ -74,18 +82,18 @@ There are 2 types of Deployment Strategy
 
 Note: Using the below command to update deployment will result in the deployment definition file having a different configuration
       Therefore, we must be careful when using the same definition file to make changes in the future.
-```
+```bash
 kubectl set image deployment myapp-deployment <container-name>=nginx:1.9.1 --record 
 ```
 
 - To view detailed information regarding a deployment
 
-```
+```bash
 kubectl describe deployment <deployment-name>
 ```
 
 - To roll back to a previous deployment
 
-```
+```bash
 kubectl rollout undo deployment/myapp-deployment
 ```

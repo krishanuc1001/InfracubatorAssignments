@@ -90,59 +90,59 @@ And for the replica set to create a new pod, the template definition is required
 
 ### Frequently Used Commands
 
-```
+```bash
 kubectl get pods -A -o wide
 ```
 
-```
+```bash
 kubectl get pods --show-labels
 ```
 
 - To get the list of ReplicaSets created
-```
+```bash
 kubectl get rs
 ```
 
-```
+```bash
 kubectl get rs -A -o wide
 ```
 
 - To delete a ReplicaSet created
-```
+```bash
 kubectl delete rs dobby-rs
 ```
 
 - To create a new Replicaset
-```
+```bash
 kubectl apply -f <replicaset-definition>.yaml
 ```
 
-```
+```bash
 kubectl describe rs <replicaset-metadata-name>
 ```
 
-```
+```bash
 kubectl delete pod <pod-name>
 ```
 
 - To replace or update a ReplicaSet
-```
+```bash
 kubectl replace -f <replicaset-definition>.yaml
 ```
 
 - To scale a ReplicaSet from CMD without modifying the definition yaml
-```
+```bash
 kubectl scale --replicas=6 -f <replicaset-definition>.yaml
 ```
 
 or 
 
-```
+```bash
 kubectl scale --replicas=6 replicaset <replicaset-name>
 ```
 
 or
 
-```
+```bash
 kubectl edit replicaset <replicaset-name>
 ```
