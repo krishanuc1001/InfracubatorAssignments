@@ -14,9 +14,9 @@ We are going to use ``Replicaset`` to address the above concerns.
 #### Reason for use of ```Replication Controller``` or ```ReplicaSet```
 
 - What if, for some reason our application crashes and the POD fails, users will no longer be able to access our application? 
-  To prevent users from losing access to our application, we would like to have more than one instance or POD running at the same time
+  To prevent users from losing access to our application, we would like to have more than one instance or POD running at the same time.
   That way, if one fails, we still have our application running on the other one.
-  The ```Replication controller``` helps us run multiple instances of a single pot in the Kubernetes cluster, thus providing high availability.
+  The ```Replication controller``` helps us run multiple instances of a single pod in the Kubernetes cluster, thus providing high availability.
 
 Even if we have a single POD, the ```replication controller``` can help by automatically bringing up a new POD when the existing one fails.
 Thus, the ```replication controller``` ensures that the specified number of PODs are running at all times, even if it's just one or 100.
